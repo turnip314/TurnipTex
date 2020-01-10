@@ -10,7 +10,7 @@ class Scanner:
         List[Tokens]:return:
         """
         from Parsing.Token import Token
-        pass
+
         def scan(string):
             state = self.dfa.get_start
             acc = ""
@@ -30,6 +30,11 @@ class Scanner:
 
         tokens = []
         while input_string:
-            pass
+            state, result_string = scan(input_string)
+            if not result_string:
+                raise Exception("Invalid Scan")
 
-        # TODO
+            tokens.append(Token(state, result_string))
+            input_string = input_string[len(result_string):]
+
+        return tokens
