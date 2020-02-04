@@ -6,8 +6,9 @@ class Scanner:
 
     def maximal_munch_scan(self, input_string):
         """
-        String:param input_string:
-        List[Tokens]:return:
+        Uses the maximal munch algorithm to fetch a list of tokens whose lexeme satisfy the DFA
+        :param input_string: String
+        :return: List[Token]
         """
         from Parsing.Token import Token
 
@@ -30,11 +31,14 @@ class Scanner:
 
         tokens = []
         while input_string:
-            state, result_string = scan(input_string)
+            result_state, result_string = scan(input_string)
             if not result_string:
                 raise Exception("Invalid Scan")
 
-            tokens.append(Token(state, result_string))
+            tokens.append(Token(result_state, result_string))
             input_string = input_string[len(result_string):]
 
         return tokens
+
+    def scan(self, input_string):
+        return self.maximal_munch_scan(input_string)
