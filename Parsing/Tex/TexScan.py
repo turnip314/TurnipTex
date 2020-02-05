@@ -1,4 +1,4 @@
-import Parsing.Scanner as scanner
+import Parsing.Tokenizer as t
 import Parsing.DFA as DFA
 
 """
@@ -22,7 +22,7 @@ class TokenKinds:
     SPACE        = "space"
     TEXT         = "text"
 
-class TexScan(scanner.Scanner):
+class TexScan(t.Tokenizer):
     def __init__(self):
         self.valid_cmds = [
             "frac",

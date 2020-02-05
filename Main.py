@@ -1,5 +1,5 @@
 from Parsing.DFA import DFA
-from Parsing.Scanner import Scanner
+from Parsing.Tokenizer import Scanner
 from Parsing.Tex.TexScan import TexScan
 
 states = ['start', '0', '1', '2']

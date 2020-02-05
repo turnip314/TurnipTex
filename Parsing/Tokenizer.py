@@ -1,6 +1,4 @@
-
-
-class Scanner:
+class Tokenizer:
     def __init__(self, dfa):
         self.dfa = dfa
 

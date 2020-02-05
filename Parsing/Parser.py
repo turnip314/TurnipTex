@@ -1,4 +1,4 @@
-import Parsing.CFG as cfg
+import Parsing.Grammar as cfg
 import Parsing.Token as t
 
 class Tree:

@@ -1,6 +1,6 @@
 import Tests.Tests as t
 import Parsing.DFA as dfa
-import Parsing.Scanner as sc
+import Parsing.Tokenizer as sc
 import Parsing.Tex.TexScan as ts
 
 class Scanner_Tests(t.Tests):
@@ -31,8 +31,8 @@ class Scanner_Tests(t.Tests):
 
         dfa2 = dfa.DFA(states2, start2, accepting2, transition2)
 
-        scanner = sc.Scanner(dfa2)
-        tokens = scanner.maximal_munch_scan("abaaaabbbbaa")
+        tokenizer = sc.Tokenizer(dfa2)
+        tokens = tokenizer.maximal_munch_scan("abaaaabbbbaa")
         for token in tokens:
             print(token.get_lexeme)
 

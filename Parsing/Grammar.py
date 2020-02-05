@@ -1,4 +1,4 @@
-class CFG:
+class Grammar:
     def __init__(self, productions, start):
         """
         :param grammar: Map[String, List[List[String]]]
