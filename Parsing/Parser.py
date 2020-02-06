@@ -6,9 +6,6 @@ class Tree:
         self.kind = kind
         self.children = children
 
-    def __str__(self):
-        return 1
-
 
 class Parser:
     def __init__(self, CFG):
@@ -64,3 +61,6 @@ class Parser:
         result = parse(self.CFG.get_productions_expanding(self.CFG.start)[0], 0, len(tokens))
         print(memo)
         return result
+
+    def parse(self, tokens):
+        return self.parser(tokens)

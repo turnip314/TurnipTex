@@ -25,8 +25,8 @@ class TokenKinds:
 class TexScan(t.Tokenizer):
     def __init__(self):
         self.valid_cmds = [
-            "frac",
-            "sum"
+            "\\frac",
+            "\\sum"
         ]
 
         states = ['start', 'cmd', '_', '^', '{', '}', 'space', 'text']
@@ -75,7 +75,8 @@ class TexScan(t.Tokenizer):
         for token in tokens:
             if token.get_kind == TokenKinds.CMD:
                 assert token.get_lexeme[0] == "\\"
-                token.set_lexeme(token.get_lexeme[1:])
                 assert token.get_lexeme in self.valid_cmds
+
+        # TODO concat the lexemes of consecutive texts
 
         return tokens
