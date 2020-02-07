@@ -3,12 +3,14 @@ import Parsing.DFA as DFA
 
 """
 TexScan Language:
-\\[without _\\{}^]*      : cmd
-_                      : _
-{                      : {
-}                      : }
-^                      : ^
-whitespace, tab, etc   : space
+\\[without _\\{}^]*     : cmd
+_{                      : _{
+{                       : {
+}                       : }
+^{                      : ^{
+_{one char}             : _x
+^{one char}             : ^x
+whitespace, tab, etc    : space
 [without _\\{}^]*       : text
 """
 
@@ -29,9 +31,9 @@ class TexScan(t.Tokenizer):
             "\\sum"
         ]
 
-        states = ['start', 'cmd', '_', '^', '{', '}', 'space', 'text']
+        states = ['start', 'cmd', '_{', '^{', '{', '}', 'space', 'text', '_x', '^x', '_', '^']
         start = 'start'
-        accepting = ['cmd', '_', '^', '{', '}', 'space', 'text']
+        accepting = ['cmd', '_x', '_{', '^x', '^{', '{', '}', 'space', 'text']
 
         def transition(state, next):
             if state == 'start':
@@ -56,8 +58,18 @@ class TexScan(t.Tokenizer):
                 if next in [' \t\n']:
                     return 'space'
             elif state == 'text':
-                if state not in "\\ \t\n_^{}":
+                if next not in ['\\', ' ', '\t', '\n', '^', '_', '{', '}']:
                     return 'text'
+            elif state == '_':
+                if next == '{':
+                    return '_{'
+                else:
+                    return '_x'
+            elif state == '^':
+                if next == '{':
+                    return '^{'
+                else:
+                    return '^x'
             return None
 
         super(TexScan, self).__init__(DFA.DFA(states, start, accepting, transition))

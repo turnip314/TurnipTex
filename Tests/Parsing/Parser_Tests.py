@@ -33,7 +33,8 @@ my_input = """
 """
 texScan = ts.TexScan()
 texParse = tp.TexParser()
-result = texParse.parse(texScan.scan(my_input))
+tokens = texScan.scan(my_input)
+result = texParse.parse(tokens)
 print(result)
 
 1

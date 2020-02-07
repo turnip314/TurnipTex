@@ -1,7 +1,7 @@
 import Parsing.Parser as p
 import Parsing.Grammar as g
 
-TexCFG = g.Grammar({
+"""TexCFG = g.Grammar({
         "Tex": [
             ["Expr"]
         ],
@@ -33,6 +33,40 @@ TexCFG = g.Grammar({
         "Word": [
             ["text", "Word"],
             ["\\infty", "Word"]
+        ]
+    }, "Tex"
+)
+"""
+
+TexCFG = g.Grammar({
+        "Tex": [
+            ["Expr"]
+        ],
+        "Expr": [
+            ["CMD", "Expr"],
+            ["POW", "Expr"],
+            ["SUB", "Expr"],
+            ["Word", "Expr"],
+            []
+        ],
+        "CMD": [
+            ["cmd"],
+            ["cmd", "{", "Expr", "}"],
+            ["cmd", "{", "Expr", "}", "{", "Expr", "}"]
+        ],
+        "POW": [
+            ["^x"],
+            ["^{", "Expr", "}"]
+        ],
+        "SUB": [
+            ["_x"],
+            ["_{", "Expr", "}"]
+        ],
+        "Word": [
+            ["text"],
+            ["text", "Word"],
+            ["\\infty", "Word"],
+
         ]
     }, "Tex"
 )
