@@ -29,7 +29,7 @@ result = parser.parse_CYK(create_tokens(['x', 'x', 'x']))
 print(result)"""
 
 my_input = """
-\\frac{1}{2}
+\\frac{a_1}{2^{\\frac{1}{2}}}
 """
 texScan = ts.TexScan()
 texParse = tp.TexParser()

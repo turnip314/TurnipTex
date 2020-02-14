@@ -89,6 +89,4 @@ class TexScan(t.Tokenizer):
                 assert token.get_lexeme[0] == "\\"
                 assert token.get_lexeme in self.valid_cmds
 
-        # TODO concat the lexemes of consecutive texts
-
         return tokens
