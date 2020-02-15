@@ -1,8 +1,12 @@
 class Type:
-    TEXT = 1
-    WORD = 2
-    FRACTION = 3
-    SUM = 4
+    EXPR = "expr"
+    TEXT = "text"
+    WORD = "word"
+    FRACTION = "frac"
+    SUM = "sum"
+    POWER = "pow"
+    SUB = "sub"
+
 
 class Expression:
     def __init__(self, expr_type):
