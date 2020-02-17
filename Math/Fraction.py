@@ -2,6 +2,8 @@ import Math.Expression as ex
 
 
 class Fraction(ex.Expression):
+    TOP_SHIFT = 0
+
     def __init__(self, top, bottom):
         """
         :param top: (Expression)
