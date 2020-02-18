@@ -9,3 +9,10 @@ result = generator.generate_expression_from_input(my_input)
 1
 1
 # print(result)
+
+my_input = """
+\\sum{a}{b} c
+"""
+
+generator = g.TexExpressionTreeGenerator()
+result = generator.generate_expression_from_input(my_input)

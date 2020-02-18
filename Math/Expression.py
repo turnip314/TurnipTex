@@ -8,6 +8,17 @@ class Type:
     SUB = "sub"
 
 
+class AXIS:
+    VERTICAL = 1
+    HORIZONTAL = 2
+
+
+class RESTRICTION:
+    TOP = 1
+    BOTTOM = 2
+    LEFT = 3
+
+
 class Expression:
     def __init__(self, expr_type):
         self.TYPE = expr_type

@@ -2,7 +2,9 @@ import Math.Expression as ex
 
 
 class Fraction(ex.Expression):
-    TOP_SHIFT = 0
+    TOP_SHIFT = -20
+    BOTTOM_SHIFT = 10
+    HORIZONTAL_SPACING = 0.2
 
     def __init__(self, top, bottom):
         """
