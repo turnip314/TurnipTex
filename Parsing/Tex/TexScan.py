@@ -28,7 +28,8 @@ class TexScan(t.Tokenizer):
     def __init__(self):
         self.valid_cmds = [
             "\\frac",
-            "\\sum"
+            "\\sum",
+            "\\infty"
         ]
 
         states = ['start', 'cmd', '_{', '^{', '{', '}', 'space', 'text', '_x', '^x', '_', '^']
@@ -84,9 +85,11 @@ class TexScan(t.Tokenizer):
 
         tokens = self.maximal_munch_scan(input_string)
         tokens = [token for token in tokens if token.get_kind != TokenKinds.SPACE]
-        for token in tokens:
+        for i in range(len(tokens)):
+            token = tokens[i]
             if token.get_kind == TokenKinds.CMD:
                 assert token.get_lexeme[0] == "\\"
-                assert token.get_lexeme in self.valid_cmds
+                if not token.get_lexeme in self.valid_cmds:
+                    token.kind = "text"
 
         return tokens

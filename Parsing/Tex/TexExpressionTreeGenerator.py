@@ -7,7 +7,7 @@ import Math.Sub as sub
 import Math.Sum as sum
 import Math.Text as txt
 import Math.Word as word
-
+import Math.Infinity as infty
 
 class TexExpressionTreeGenerator:
     def __init__(self):
@@ -51,6 +51,8 @@ class TexExpressionTreeGenerator:
                     self.generate_expression_tree(sub_expr_one),
                     self.generate_expression_tree(sub_expr_two)
                 )
+            elif cmd == "\\infty":
+                return infty.Infinity()
 
         elif tree.kind.get_kind == "POW":
             kind = tree.children[0].kind.get_kind

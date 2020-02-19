@@ -11,7 +11,7 @@ class Text(ex.Expression):
         self.text = text
 
     def get_width(self, scale):
-        return txt.TextComponent(self.text, (0,0), scale).get_width
+        return txt.TextComponent(self.text, (0,0), scale).get_width + scale * 10
 
     def get_height(self, scale):
         return txt.TextComponent(self.text, (0,0), scale).get_height

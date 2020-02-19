@@ -16,8 +16,10 @@ draw.text((0,0), "g", font=fnt)
 image.save("image.png", "PNG")
 
 my_input = """
-\\sum{a}{\\sum{b}{c}}
+\\sum{n=1}{a \infty} - \\frac{1}{12}
 """
+
+my_input = str(input())
 
 generator = TexExpressionTreeGenerator()
 result = generator.generate_expression_from_input(my_input)

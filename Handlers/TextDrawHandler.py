@@ -8,6 +8,7 @@ class TexDrawHandler:
         self.offset = (0,0)
         self.texts = []
         self.images = []
+        self.shapes = []
 
     def add_component_text(self, component):
         self._components.append(component)
@@ -16,6 +17,10 @@ class TexDrawHandler:
     def add_component_image(self, component):
         self._components.append(component)
         self.images.append(component)
+
+    def add_component_shape(self, component):
+        self._components.append(component)
+        self.shapes.append(component)
 
     @property
     def get_current_offset(self):
@@ -36,6 +41,10 @@ class TexDrawHandler:
 
         draw = ImageDraw.Draw(image)
         for text_component in self.texts:
+            text_component.shift_by(0, -text_component.scale * 10)
             text_component.draw(draw)
+
+        for shape_component in self.shapes:
+            shape_component.draw(draw)
 
         image.save(destination, "PNG")

@@ -33,7 +33,7 @@ class Parser:
             :param length: int
             :return:
             """
-            print(lhs, pos, length)
+            #print(lhs, pos, length)
             if get_key(lhs, pos, length) in memo:
                 return memo[get_key(lhs, pos, length)]
             memo[get_key(lhs, pos, length)] = None

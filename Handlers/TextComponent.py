@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageColor
 class TextComponent:
     DEFAULT_SIZE = 100
 
-    def __init__(self, text, top_left, scale, font='cmunbi.ttf'):
+    def __init__(self, text, top_left, scale, font='cmunsi.ttf'):
         self.text = text
         self.top_left = top_left
         self.scale = scale

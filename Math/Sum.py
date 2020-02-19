@@ -10,8 +10,8 @@ class Sum(ex.Expression):
     WIDTH_TO_HEIGHT = 1  # might need to adjust
     TOP_SCALE = 0.6
     BOTTOM_SCALE = 0.6
-    TOP_SHIFT = -0.1
-    BOTTOM_SHIFT = 0
+    TOP_SHIFT = 0.05
+    BOTTOM_SHIFT = 0.05
     HORIZONTAL_SPACING = 0.2
 
     def __init__(self, bottom, top):
@@ -47,7 +47,7 @@ class Sum(ex.Expression):
                self.bottom.get_height(scale * self.BOTTOM_SCALE) + \
                self.HEIGHT * self.BOTTOM_SHIFT * scale
 
-    def get_height_from_origin(self, scale):
+    def get_height_below_origin(self, scale):
         """
         Gets height of itself and bottom
         :param scale:
@@ -57,16 +57,24 @@ class Sum(ex.Expression):
                self.bottom.get_height(scale * self.BOTTOM_SCALE) + \
                self.HEIGHT * self.BOTTOM_SHIFT * scale
 
+    def get_height_of_main_component(self, scale):
+        """
+        Gets height of itself assuming no subexpressions
+        :param scale:
+        :return:
+        """
+        return self.HEIGHT * scale
+
     def draw(self, handler, scale=1):
         x, y = handler.get_current_offset
         handler.add_component_image(img.ImageComponent(self.IMAGE, (x, y), scale))
 
         top_x = x + self.WIDTH * scale * 0.5 - self.top.get_width(scale * self.TOP_SCALE) * 0.5
-        top_y = y - self.top.get_height_from_origin(scale * self.TOP_SCALE) + self.HEIGHT * self.TOP_SHIFT * scale
+        top_y = y - self.top.get_height_below_origin(scale * self.TOP_SCALE) - self.HEIGHT * self.TOP_SHIFT * scale
         handler.set_offset(top_x, top_y)
         self.top.draw(handler, scale * self.TOP_SCALE)
 
         bottom_x = x + self.WIDTH * scale * 0.5 - self.bottom.get_width(scale * self.BOTTOM_SCALE) * 0.5
-        bottom_y = y + self.HEIGHT * scale + self.HEIGHT * self.BOTTOM_SHIFT * scale
+        bottom_y = y + self.HEIGHT * scale + self.HEIGHT * self.BOTTOM_SHIFT * scale + self.bottom.get_height_above_origin(scale * self.BOTTOM_SCALE)
         handler.set_offset(bottom_x, bottom_y)
         self.bottom.draw(handler, scale * self.BOTTOM_SCALE)
