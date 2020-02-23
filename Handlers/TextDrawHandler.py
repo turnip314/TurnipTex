@@ -1,5 +1,7 @@
 from PIL import Image, ImageDraw
 
+import Parsing.Tex.TexExpressionTreeGenerator as gen
+
 
 class TexDrawHandler:
     def __init__(self, input_string):
@@ -9,6 +11,10 @@ class TexDrawHandler:
         self.texts = []
         self.images = []
         self.shapes = []
+
+        generator = gen.TexExpressionTreeGenerator()
+        self.tree = generator.generate_expression_from_input(input_string)
+        self.tree.set_scale()
 
     def add_component_text(self, component):
         self._components.append(component)
@@ -30,6 +36,8 @@ class TexDrawHandler:
         self.offset = (x, y)
 
     def draw(self, destination="result.png"):
+        self.tree.draw(self)
+
         min_x = min([component.get_x for component in self._components])
         min_y = min([component.get_y for component in self._components])
         for component in self._components:

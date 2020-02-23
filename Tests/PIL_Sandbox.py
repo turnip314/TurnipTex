@@ -21,8 +21,6 @@ my_input = """
 
 my_input = str(input())
 
-generator = TexExpressionTreeGenerator()
-result = generator.generate_expression_from_input(my_input)
-handler = TexDrawHandler("")
-result.draw(handler)
+
+handler = TexDrawHandler(my_input)
 handler.draw()

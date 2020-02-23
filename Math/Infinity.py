@@ -13,17 +13,21 @@ class Infinity(ex.Expression):
         """
         super().__init__(ex.Type.TEXT)
 
-    def get_width(self, scale):
-        return self.WIDTH * scale
+    @property
+    def get_width(self):
+        return self.WIDTH * self.scale
 
-    def get_height_of_main_component(self, scale):
-        return self.get_height(scale)
+    @property
+    def get_height_of_main_component(self):
+        return self.get_height
 
-    def get_height_below_origin(self, scale):
-        return self.get_height(scale)
+    @property
+    def get_height_below_origin(self):
+        return self.get_height
 
-    def get_height(self, scale):
-        return self.HEIGHT * scale
+    @property
+    def get_height(self):
+        return self.HEIGHT * self.scale
 
     def draw(self, handler, scale=1):
         handler.add_component_image(

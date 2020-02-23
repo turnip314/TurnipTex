@@ -23,58 +23,68 @@ class Sum(ex.Expression):
         self.bottom = bottom
         self.top = top
 
-    def get_width(self, scale):
+    def set_scale(self, scale=1):
+        self.scale = scale
+        self.top.set_scale(scale * self.TOP_SCALE)
+        self.bottom.set_scale(scale * self.BOTTOM_SCALE)
+
+    @property
+    def get_width(self):
         """
         Gets width of itself and all sub-expressions
         :param scale:
         :return:
         """
         return max(
-            self.top.get_width(scale * self.TOP_SCALE),
-            self.bottom.get_width(scale * self.BOTTOM_SCALE),
-            self.WIDTH * scale
+            self.top.get_width,
+            self.bottom.get_width,
+            self.WIDTH * self.scale
         )
 
-    def get_height(self, scale):
+    @property
+    def get_height(self):
         """
         Gets height of itself and all subexpressions
         :param scale:
         :return:
         """
-        return self.HEIGHT * scale + \
-               self.top.get_height(scale * self.TOP_SCALE) + \
-               self.HEIGHT * self.TOP_SHIFT * scale + \
-               self.bottom.get_height(scale * self.BOTTOM_SCALE) + \
-               self.HEIGHT * self.BOTTOM_SHIFT * scale
+        return self.HEIGHT * self.scale + \
+               self.top.get_height + \
+               self.HEIGHT * self.TOP_SHIFT * self.scale + \
+               self.bottom.get_height + \
+               self.HEIGHT * self.BOTTOM_SHIFT * self.scale
 
-    def get_height_below_origin(self, scale):
+    @property
+    def get_height_below_origin(self):
         """
         Gets height of itself and bottom
         :param scale:
         :return:
         """
-        return self.HEIGHT * scale + \
-               self.bottom.get_height(scale * self.BOTTOM_SCALE) + \
-               self.HEIGHT * self.BOTTOM_SHIFT * scale
+        return self.HEIGHT * self.scale + \
+               self.bottom.get_height + \
+               self.HEIGHT * self.BOTTOM_SHIFT * self.scale
 
-    def get_height_of_main_component(self, scale):
+    @property
+    def get_height_of_main_component(self):
         """
         Gets height of itself assuming no subexpressions
         :param scale:
         :return:
         """
-        return self.HEIGHT * scale
+        return self.HEIGHT * self.scale
 
-    def draw(self, handler, scale=1):
+    def draw(self, handler):
         x, y = handler.get_current_offset
-        handler.add_component_image(img.ImageComponent(self.IMAGE, (x, y), scale))
+        handler.add_component_image(img.ImageComponent(self.IMAGE, (x, y), self.scale))
 
-        top_x = x + self.WIDTH * scale * 0.5 - self.top.get_width(scale * self.TOP_SCALE) * 0.5
-        top_y = y - self.top.get_height_below_origin(scale * self.TOP_SCALE) - self.HEIGHT * self.TOP_SHIFT * scale
+        top_x = x + self.WIDTH * self.scale * 0.5 - self.top.get_width * 0.5
+        top_y = y - self.top.get_height_below_origin - self.HEIGHT * self.TOP_SHIFT * self.scale
         handler.set_offset(top_x, top_y)
-        self.top.draw(handler, scale * self.TOP_SCALE)
+        self.top.draw(handler)
 
-        bottom_x = x + self.WIDTH * scale * 0.5 - self.bottom.get_width(scale * self.BOTTOM_SCALE) * 0.5
-        bottom_y = y + self.HEIGHT * scale + self.HEIGHT * self.BOTTOM_SHIFT * scale + self.bottom.get_height_above_origin(scale * self.BOTTOM_SCALE)
+        bottom_x = x + self.WIDTH * self.scale * 0.5 - self.bottom.get_width * 0.5
+        bottom_y = y + self.HEIGHT * self.scale + self.HEIGHT * self.BOTTOM_SHIFT * self.scale + \
+                   self.bottom.get_height_above_origin
         handler.set_offset(bottom_x, bottom_y)
-        self.bottom.draw(handler, scale * self.BOTTOM_SCALE)
+        self.bottom.draw(handler)

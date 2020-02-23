@@ -8,21 +8,30 @@ class Word(ex.Expression):
         super().__init__(ex.Type.WORD)
         self.texts = texts
 
-    def get_width(self, scale):
-        return sum([text.get_width(scale) for text in self.texts])
+    def set_scale(self, scale=1):
+        self.scale = scale
+        for text in self.texts:
+            text.set_scale(scale)
 
-    def get_height(self, scale):
-        return max([text.get_height(scale) for text in self.texts])
+    @property
+    def get_width(self):
+        return sum([text.get_width for text in self.texts])
 
-    def get_height_of_main_component(self, scale):
-        return self.get_height(scale)
+    @property
+    def get_height(self):
+        return max([text.get_height for text in self.texts])
 
-    def get_height_below_origin(self, scale):
-        return self.get_height(scale)
+    @property
+    def get_height_of_main_component(self):
+        return self.get_height
 
-    def draw(self, handler, scale=1):
+    @property
+    def get_height_below_origin(self):
+        return self.get_height
+
+    def draw(self, handler):
         x, y = handler.get_current_offset
         for text in self.texts:
-            text.draw(handler, scale)
-            x += text.get_width(scale)
+            text.draw(handler)
+            x += text.get_width
             handler.set_offset(x, y)
