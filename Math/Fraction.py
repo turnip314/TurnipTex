@@ -56,9 +56,9 @@ class Fraction(ex.Expression):
         :param scale:
         :return:
         """
-        return self.THICKNESS * scale + \
-               self.bottom.get_height(scale * self.BOTTOM_SCALE) + \
-               self.THICKNESS * self.BOTTOM_SHIFT * scale
+        return self.THICKNESS * self.scale + \
+               self.bottom.get_height + \
+               self.THICKNESS * self.BOTTOM_SHIFT * self.scale
 
     @property
     def get_height_of_main_component(self):

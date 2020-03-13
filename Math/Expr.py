@@ -20,11 +20,27 @@ class Expr(ex.Expression):
 
     @property
     def get_height(self):
-        return max([expr.get_height for expr in self.expressions])
+        """
+        Height is calculated by
+        Max Height of main component / 2 + height above main component (origin)
+        Max Height of main component / 2 + height below main component (origin)
+        :return:
+        """
+        return max(
+                [expr.get_height_of_main_component/2 + expr.get_height_above_origin for expr in self.expressions]
+            ) + max(
+                [expr.get_height_below_origin - expr.get_height_of_main_component/2 for expr in self.expressions]
+            )
+
+
 
     @property
     def get_height_below_origin(self):
         return max([expr.get_height_below_origin for expr in self.expressions])
+
+    @property
+    def get_height_of_main_component(self):
+        return self.get_height
 
     def draw(self, handler):
         x, y = handler.get_current_offset

@@ -22,6 +22,10 @@ class Text(ex.Expression):
     def get_height(self):
         return txt.TextComponent(self.text, (0,0), self.scale).get_height
 
+    @property
+    def get_height_below_origin(self):
+        return self.get_height
+
     def draw(self, handler):
         handler.add_component_text(
             txt.TextComponent(self.text, handler.get_current_offset, self.scale)

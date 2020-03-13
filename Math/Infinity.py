@@ -13,6 +13,9 @@ class Infinity(ex.Expression):
         """
         super().__init__(ex.Type.TEXT)
 
+    def set_scale(self, scale=1):
+        self.scale = scale
+
     @property
     def get_width(self):
         return self.WIDTH * self.scale
@@ -29,7 +32,7 @@ class Infinity(ex.Expression):
     def get_height(self):
         return self.HEIGHT * self.scale
 
-    def draw(self, handler, scale=1):
+    def draw(self, handler):
         handler.add_component_image(
-            img.ImageComponent(self.IMAGE, handler.get_current_offset, scale)
+            img.ImageComponent(self.IMAGE, handler.get_current_offset, self.scale)
         )
