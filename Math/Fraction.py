@@ -19,55 +19,36 @@ class Fraction(ex.Expression):
         self.top = top
         self.bottom = bottom
 
+    def initialize(self):
+        self.top.initialize()
+        self.bottom.initialize()
+        super().initialize()
+
     def set_scale(self, scale=1):
         self.scale = scale
         self.top.set_scale(scale * self.TOP_SCALE)
         self.bottom.set_scale(scale * self.BOTTOM_SCALE)
 
-    @property
-    def get_width(self):
-        """
-        Gets width of itself and all sub-expressions
-        :param scale:
-        :return:
-        """
-        return max(
+    def initialize_width(self):
+        self.width = max(
             self.top.get_width,
             self.bottom.get_width
         )
 
-    @property
-    def get_height(self):
-        """
-        Gets height of itself and all subexpressions
-        :param scale:
-        :return:
-        """
-        return self.THICKNESS * self.scale + \
+    def initialize_height(self):
+        self.height = self.THICKNESS * self.scale + \
                self.top.get_height + \
                self.THICKNESS * self.TOP_SHIFT * self.scale + \
                self.bottom.get_height + \
                self.THICKNESS * self.BOTTOM_SHIFT * self.scale
 
-    @property
-    def get_height_below_origin(self):
-        """
-        Gets height of itself and bottom
-        :param scale:
-        :return:
-        """
-        return self.THICKNESS * self.scale + \
+    def initialize_height_below_origin(self):
+        self.height_below_origin = self.THICKNESS * self.scale + \
                self.bottom.get_height + \
                self.THICKNESS * self.BOTTOM_SHIFT * self.scale
 
-    @property
-    def get_height_of_main_component(self):
-        """
-        Gets height of itself assuming no subexpressions
-        :param scale:
-        :return:
-        """
-        return self.THICKNESS * self.scale
+    def initialize_height_of_main_component(self):
+        self.height_of_main_component = self.THICKNESS * self.scale
 
     def draw(self, handler):
         x, y = handler.get_current_offset

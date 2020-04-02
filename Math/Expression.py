@@ -41,8 +41,8 @@ class Expression:
         self.initialize_width()
         self.initialize_height()
         self.initialize_height_below_origin()
-        self.initialize_height_above_origin()
         self.initialize_height_of_main_component()
+        self.initialize_height_above_origin()
 
     def initialize_width(self):
         raise Exception("Width initialization not implemented for " + str(type(self)))
@@ -53,11 +53,11 @@ class Expression:
     def initialize_height_below_origin(self):
         raise Exception("Initialize height below origin not implemented for " + str(type(self)))
 
-    def initialize_height_above_origin(self):
-        raise Exception("Initialize height above origin not implemented for " + str(type(self)))
-
     def initialize_height_of_main_component(self):
         raise Exception("Initialize height of main component not implemented for " + str(type(self)))
+
+    def initialize_height_above_origin(self):
+        self.height_above_origin = self.get_height - self.get_height_below_origin
 
     def set_scale(self, scale=1):
         raise Exception("Scale not implemented for " + str(type(self)))

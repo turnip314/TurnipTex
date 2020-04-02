@@ -14,32 +14,31 @@ class Expr(ex.Expression):
         for expr in self.expressions:
             expr.set_scale(scale)
 
-    @property
-    def get_width(self):
-        return sum([expr.get_width for expr in self.expressions])
+    def initialize(self):
+        for expr in self.expressions:
+            expr.initialize()
+        super().initialize()
 
-    @property
-    def get_height(self):
+    def initialize_width(self):
+        self.width = sum([expr.get_width for expr in self.expressions])
+
+    def initialize_height(self):
         """
         Height is calculated by
         Max Height of main component / 2 + height above main component (origin)
         Max Height of main component / 2 + height below main component (origin)
         :return:
         """
-        return max(
-                [expr.get_height_of_main_component/2 + expr.get_height_above_origin for expr in self.expressions]
-            ) + max(
-                [expr.get_height_below_origin - expr.get_height_of_main_component/2 for expr in self.expressions]
-            )
+        self.height = max(
+            [expr.get_height_of_main_component / 2 + expr.get_height_above_origin for expr in self.expressions]
+        ) + max(
+            [expr.get_height_below_origin - expr.get_height_of_main_component / 2 for expr in self.expressions]
+        )
 
+    def initialize_height_below_origin(self):
+        self.height_below_origin = max([expr.get_height_below_origin for expr in self.expressions])
 
-
-    @property
-    def get_height_below_origin(self):
-        return max([expr.get_height_below_origin for expr in self.expressions])
-
-    @property
-    def get_height_of_main_component(self):
+    def initialize_height_of_main_component(self):
         return self.get_height
 
     def draw(self, handler):

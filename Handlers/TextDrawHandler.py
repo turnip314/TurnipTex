@@ -15,6 +15,7 @@ class TexDrawHandler:
         generator = gen.TexExpressionTreeGenerator()
         self.tree = generator.generate_expression_from_input(input_string)
         self.tree.set_scale()
+        self.tree.initialize()
 
     def add_component_text(self, component):
         self._components.append(component)

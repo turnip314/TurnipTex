@@ -23,56 +23,37 @@ class Sum(ex.Expression):
         self.bottom = bottom
         self.top = top
 
+    def initialize(self):
+        self.bottom.initialize()
+        self.top.initialize()
+        super().initialize()
+
     def set_scale(self, scale=1):
         self.scale = scale
         self.top.set_scale(scale * self.TOP_SCALE)
         self.bottom.set_scale(scale * self.BOTTOM_SCALE)
 
-    @property
-    def get_width(self):
-        """
-        Gets width of itself and all sub-expressions
-        :param scale:
-        :return:
-        """
-        return max(
+    def initialize_width(self):
+        self.width = max(
             self.top.get_width,
             self.bottom.get_width,
             self.WIDTH * self.scale
         )
 
-    @property
-    def get_height(self):
-        """
-        Gets height of itself and all subexpressions
-        :param scale:
-        :return:
-        """
-        return self.HEIGHT * self.scale + \
+    def initialize_height(self):
+        self.height = self.HEIGHT * self.scale + \
                self.top.get_height + \
                self.HEIGHT * self.TOP_SHIFT * self.scale + \
                self.bottom.get_height + \
                self.HEIGHT * self.BOTTOM_SHIFT * self.scale
 
-    @property
-    def get_height_below_origin(self):
-        """
-        Gets height of itself and bottom
-        :param scale:
-        :return:
-        """
-        return self.HEIGHT * self.scale + \
+    def initialize_height_below_origin(self):
+        self.height_below_origin = self.HEIGHT * self.scale + \
                self.bottom.get_height + \
                self.HEIGHT * self.BOTTOM_SHIFT * self.scale
 
-    @property
-    def get_height_of_main_component(self):
-        """
-        Gets height of itself assuming no subexpressions
-        :param scale:
-        :return:
-        """
-        return self.HEIGHT * self.scale
+    def initialize_height_of_main_component(self):
+        self.height_of_main_component = self.HEIGHT * self.scale
 
     def draw(self, handler):
         x, y = handler.get_current_offset
