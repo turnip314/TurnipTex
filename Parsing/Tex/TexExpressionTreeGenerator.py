@@ -8,6 +8,7 @@ import Math.Sum as sum
 import Math.Text as txt
 import Math.Word as word
 import Math.Infinity as infty
+import Math.Paren as paren
 
 class TexExpressionTreeGenerator:
     def __init__(self):
@@ -31,6 +32,12 @@ class TexExpressionTreeGenerator:
         if tree.kind.get_kind == "Expr":
             sub_expr_trees = self.collapse("Expr", tree)
             return exp.Expr([self.generate_expression_tree(t) for t in sub_expr_trees])
+
+        elif tree.kind.get_kind == "PAREN":
+            """
+            ["(", "Expr", ")"]
+            """
+            return paren.Paren(self.generate_expression_tree(tree.children[1]))
 
         elif tree.kind.get_kind == "CMD":
             """

@@ -10,7 +10,11 @@ TexCFG = g.Grammar({
             ["POW", "Expr"],
             ["SUB", "Expr"],
             ["Word", "Expr"],
+            ["PAREN", "Expr"],
             []
+        ],
+        "PAREN": [
+            ["(", "Expr", ")"]
         ],
         "CMD": [
             ["cmd"],

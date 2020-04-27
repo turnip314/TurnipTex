@@ -1,5 +1,4 @@
 import Math.Expression as ex
-import Handlers.LineComponent as l
 
 
 class Fraction(ex.Expression):
@@ -51,6 +50,7 @@ class Fraction(ex.Expression):
         self.height_of_main_component = self.THICKNESS * self.scale
 
     def draw(self, handler):
+        import Handlers.LineComponent as l
         x, y = handler.get_current_offset
         handler.add_component_shape(
             l.LineComponent((x, y), self.THICKNESS * self.scale, self.get_width))

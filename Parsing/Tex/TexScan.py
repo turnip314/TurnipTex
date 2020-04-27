@@ -11,7 +11,9 @@ _{                      : _{
 _{one char}             : _x
 ^{one char}             : ^x
 whitespace, tab, etc    : space
-[without _\\{}^]*       : text
+[without _\\{}^()]*     : text
+(                       : (
+)                       : )
 """
 
 
@@ -23,6 +25,8 @@ class TokenKinds:
     UP_ARROW     = "^"
     SPACE        = "space"
     TEXT         = "text"
+    LEFT_PAREN   = "("
+    RIGHT_PAREN  = ")"
 
 class TexScan(t.Tokenizer):
     def __init__(self):
@@ -32,9 +36,9 @@ class TexScan(t.Tokenizer):
             "\\infty"
         ]
 
-        states = ['start', 'cmd', '_{', '^{', '{', '}', 'space', 'text', '_x', '^x', '_', '^']
+        states = ['start', 'cmd', '_{', '^{', '{', '}', 'space', 'text', '_x', '^x', '_', '^', '(', ')']
         start = 'start'
-        accepting = ['cmd', '_x', '_{', '^x', '^{', '{', '}', 'space', 'text']
+        accepting = ['cmd', '_x', '_{', '^x', '^{', '{', '}', 'space', 'text', '(', ')']
 
         def transition(state, next):
             if state == 'start':
@@ -48,18 +52,22 @@ class TexScan(t.Tokenizer):
                     return '{'
                 elif next == '}':
                     return '}'
+                elif next == '(':
+                    return '('
+                elif next == ')':
+                    return ')'
                 elif next in " ', '\t', '\n":
                     return 'space'
                 else:
                     return 'text'
             elif state == 'cmd':
-                if next not in "\\ \t\n_^{}":
+                if next not in "\\ \t\n_^{}()":
                     return 'cmd'
             elif state == 'space':
                 if next in [' \t\n']:
                     return 'space'
             elif state == 'text':
-                if next not in ['\\', ' ', '\t', '\n', '^', '_', '{', '}']:
+                if next not in ['\\', ' ', '\t', '\n', '^', '_', '{', '}', '(', ')']:
                     return 'text'
             elif state == '_':
                 if next == '{':

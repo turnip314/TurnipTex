@@ -1,6 +1,4 @@
 import Math.Expression as ex
-import Handlers.ImageComponent as img
-import Handlers.TextComponent as txt
 
 
 class Sum(ex.Expression):
@@ -56,6 +54,7 @@ class Sum(ex.Expression):
         self.height_of_main_component = self.HEIGHT * self.scale
 
     def draw(self, handler):
+        import Handlers.ImageComponent as img
         x, y = handler.get_current_offset
         handler.add_component_image(img.ImageComponent(self.IMAGE, (x, y), self.scale))
 

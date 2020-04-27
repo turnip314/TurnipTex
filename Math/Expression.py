@@ -30,7 +30,7 @@ class Expression:
         self.height_of_main_component = None
 
     def __str__(self):
-        raise Exception("__str__ not implemented for {}}".format(self.TYPE))
+        raise Exception("__str__ not implemented for %s" % self.TYPE)
 
     def initialize(self):
         """
