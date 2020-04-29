@@ -37,7 +37,7 @@ class TextComponent:
         sum = Image.open("../Resources/sum.png").convert('RGBA')
 
         draw = ImageDraw.Draw(image)
-        return draw.textsize("g", font=self.font)[1]
+        return draw.textsize("g", font=self.font)[1]*0.75
 
     def draw(self, draw):
         draw.text(self.top_left, self.text, fill="black", font=self.font)

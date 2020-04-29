@@ -1,6 +1,7 @@
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
 import Parsing.Tex.TexExpressionTreeGenerator as gen
+from Handlers.TextComponent import TextComponent
 
 
 class TexDrawHandler:
@@ -50,8 +51,13 @@ class TexDrawHandler:
 
         draw = ImageDraw.Draw(image)
         for text_component in self.texts:
-            text_component.shift_by(0, -text_component.scale * 10)
+            # shift text down because the library draws it weirdly
+            text_component.shift_by(0, -text_component.scale * 22)
             text_component.draw(draw)
+
+        testing = TextComponent('0',(0,0),1)
+        #testing.draw(draw)
+        #print(testing.get_height)
 
         for shape_component in self.shapes:
             shape_component.draw(draw)
