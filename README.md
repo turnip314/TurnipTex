@@ -13,4 +13,4 @@ TurnipTex currently supports the following symbols:
 | summation | \sum{}{} |
 | infinity | \infty |
 | exponent | <expr>^{} or <expr>^x |
-| subscript | <expr> _ {} or <expr> _ x |
+| subscript | <expr> _{} or <expr> _x |
