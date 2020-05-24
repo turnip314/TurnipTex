@@ -20,7 +20,7 @@ class Paren(ex.Expression):
 
     def initialize(self):
         self.expression.initialize()
-        self.adjusted_scale = self.scale #* self.expression.get_height / 100.0
+        self.adjusted_scale = self.expression.get_height / 80.0
         super().initialize()
 
     # BELOW ARE ALL TODO

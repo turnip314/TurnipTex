@@ -11,7 +11,7 @@ TexCFG = g.Grammar({
             ["SUB", "Expr"],
             ["Word", "Expr"],
             ["PAREN", "Expr"],
-            []
+            [],
         ],
         "PAREN": [
             ["(", "Expr", ")"]
@@ -22,12 +22,16 @@ TexCFG = g.Grammar({
             ["cmd", "{", "Expr", "}", "{", "Expr", "}"]
         ],
         "POW": [
-            ["^x"],
-            ["^{", "Expr", "}"]
+            ["BASE", "^x"],
+            ["BASE", "^{", "Expr", "}"]
         ],
         "SUB": [
-            ["_x"],
-            ["_{", "Expr", "}"]
+            ["BASE", "_x"],
+            ["BASE", "_{", "Expr", "}"]
+        ],
+        "BASE": [
+            ["text"],
+            ["PAREN"],
         ],
         "Word": [
             ["text"],

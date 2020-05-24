@@ -32,6 +32,22 @@ class Expression:
     def __str__(self):
         raise Exception("__str__ not implemented for %s" % self.TYPE)
 
+    @property
+    def is_center_align(self):
+        """
+        Whether or not to align with other expressions by center of main component
+        :return:
+        """
+        return True
+
+    @property
+    def is_top_align(self):
+        """
+        Exponents for example
+        :return:
+        """
+        return False
+
     def initialize(self):
         """
         Initializes size fields

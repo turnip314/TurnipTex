@@ -62,21 +62,49 @@ class TexExpressionTreeGenerator:
                 return infty.Infinity()
 
         elif tree.kind.get_kind == "POW":
-            kind = tree.children[0].kind.get_kind
+            """
+            "POW": [
+                ["BASE", "^x"],
+                ["BASE", "^{", "Expr", "}"]
+            ],
+            "BASE": [
+                ["text"],
+                ["PAREN"]
+            ],
+            """
+            kind = tree.children[1].kind.get_kind
             if kind == "^x":
-                return pow.Power(txt.Text(tree.children[0].kind.get_lexeme[1:]))  # ???
+                return pow.Power(
+                    self.generate_expression_tree(tree.children[0].children[0]),
+                    txt.Text(tree.children[1].kind.get_lexeme[1:])
+                )
             elif kind == "^{":
                 return pow.Power(
-                    self.generate_expression_tree(tree.children[1])
+                    self.generate_expression_tree(tree.children[0].children[0]),
+                    self.generate_expression_tree(tree.children[2])
                 )
 
         elif tree.kind.get_kind == "SUB":
-            kind = tree.children[0].kind.get_kind
+            """
+            "SUB": [
+                ["BASE", "^x"],
+                ["BASE", "^{", "Expr", "}"]
+            ],
+            "BASE": [
+                ["text"],
+                ["PAREN"]
+            ],
+            """
+            kind = tree.children[1].kind.get_kind
             if kind == "_x":
-                return sub.Sub(txt.Text(tree.children[0].kind.get_lexeme[1:]))  # ???
+                return sub.Sub(
+                    self.generate_expression_tree(tree.children[0].children[0]),
+                    txt.Text(tree.children[1].kind.get_lexeme[1:])
+                )
             elif kind == "_{":
                 return sub.Sub(
-                    self.generate_expression_tree(tree.children[1])
+                    self.generate_expression_tree(tree.children[0].children[0]),
+                    self.generate_expression_tree(tree.children[2])
                 )
 
         elif tree.kind.get_kind == "Word":
